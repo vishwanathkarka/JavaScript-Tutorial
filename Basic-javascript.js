@@ -80,12 +80,12 @@ else {
 for (var a=1; a<=5;a++){
     console.log("statement")
 }
-
+var choice
 switch (choice){
     case 1: console.log("sum:", a+b)
       break;
     case 2: console.log("diff:", a-b)
-      break
+      break;
     default: console.log("Invalid choice")
 }
  if(a>b){
