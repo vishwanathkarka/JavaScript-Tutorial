@@ -24,22 +24,21 @@ let student = {
 
 
 }
-console.log(student.address) //{ street: 'KPHB', city: 'HYD' }
-console.log(student.address.city) //HYD
-console.log(student.getFreeStatus())// Paid
+console.log(student.address) // O/P: { street: 'KPHB', city: 'HYD' }
+console.log(student.address.city) // O/P: HYD
+console.log(student.getFreeStatus())// O/P: Paid
 
 
-
-//Constructor
+// Insert of wring same code for multiple time we can use constructor
 //60 student X 10 lines of code  = 600 lines   so we this will be more complex to handle
 // we use constructor to use same code for different object which as same properties
 let student1 = {
     sno:100,
-    name:"vishwa",
+    name:"vishwa", //String
     free:1200,
-    freePaid :1200, 
-    skill:['java','html','javascript'], 
-    address:{ 
+    freePaid :1200,  // numbers
+    skill:['java','html','javascript'],  //array
+    address:{   // object
         street:"KPHB",
         city: "HYD",
 
@@ -67,43 +66,62 @@ let student1 = {
         
             },}
 
-            ///...........................
+            ///..
+            //.......
+            //..................
 
-
-// constructor syntax
-//syntax:
-//function NameOfFunction(params)    // we may use uppercamlcase NameOfFunction not nameOfFunction
+// --- Normal Function ---
+//function NameOfFunction(params)    // we may use uppercamlcase(NameOfFunction) NameOfFunction not nameOfFunction
 //{
 // business logic for FUNCTION
-// object initalization logic for CONSTRUCTOR
+// }
+
+// --- constructor function & prototype   ---
+//syntax:
+//function NameOfFunction(params)    // we may use uppercamlcase ==> (NameOfFunction) NameOfFunction not nameOfFunction
+//{
+// business logic for FUNCTION
+// object initialization logic for CONSTRUCTOR
 //}
 
-
-//creating student constructor  function
+//creating student constructor function
 function StudentInfo(sno,name,free,freePaid,skill,address,getFreeStatus){  // constructor function represents shape of the object or type of object 
-    //object intialization logic  //exemple :- famework which they used to make an ideal 
-console.log(this)// this refers for current object //StudentInfo {}
+    //object initialization logic  //example :- framework which they used to make an ideal 
+console.log(this) // O/P: StudentInfo {} // this refers for current object 
 this.sno = sno; // this.sno is the properties, sno  is parameter
 this.name = name 
 this.free = free
 this.freePaid =freePaid
 this.skill = skill
 this.address = address
-//this.getFreeStatus = getFreeStatus 
- //removing it for prototype constructor
- this.getFreeStatus
-//  this.getFreeStatus = function(){
-//         if (this.free!==this.freePaid){ 
-//               return "pending" 
-//         }
-//         else{
-//             return "Paid"
-//         }
-//     }
+this.getFreeStatus= function(){
+    if(this.free == this.freePaid){
+        return 'paid'
+    }
+    else{
+         return 'pending'
+}
+}
+// Here we are using same logic function for every object instead of the we can use prototype 
 }
 
-// add function to prototype constructor function 2nd diagram
-StudentInfo.prototype.getFreeStatus = function () {
+// each object has it's own data
+//  |sno           |        |  sno            |    
+//  |name ..       |        |   name ...      |
+//  |getFreeStatus()|        | getFreeStatus() |
+//Here we are using different function for every object for same operation ex:- getFreeStatus
+
+// new is a keyword is used to create a constructor function 
+let Student = new StudentInfo(20,"Ram",5000,5000,['python','java','javascript'],{location:"HYD",pin:5001,mondal:"HYD",},)//function(){return "Paid"})
+console.log(`Name is  ${Student.name}`) // O/P : Name is  Ram
+console.log(`Skill is  ${Student.skill}`) // O/P : Skill is  python,java,javascript
+console.log(`address is  ${Student.address.location}`) // O/P : address is  HYD
+console.log(`address is  ${Student.values}`) // O/P : address is  HYD
+console.log(student.getFreeStatus()) //  O/P :  Paid
+
+
+// ---  prototype  ---
+StudentInfo.prototype.getFreeStatusProto = function () {
     if (this.free!==this.freePaid){ 
         return "pending" 
   }
@@ -112,27 +130,28 @@ StudentInfo.prototype.getFreeStatus = function () {
   }
 }
 
-//create an object exemple:- ideal
+//create an object example:- ideal
 // StudentInfo(100,'vishwa') //if we use use normal function
 // object initialization Logic
- let std3 = new StudentInfo(100,'vishwa',2000,1200,['java','python'],{street:'KPHB'})//function(){return "paid"}) // we use new keyword for creating constructor
+ let std3 = new StudentInfo(100,'vishwa',2000,1200,['java','python'],{street:'KPHB'})// we can use function here  :- function(){return "paid"}) // we use new keyword for creating constructor
  let std4 = new StudentInfo(200,'Ramesh',3000,1300,['C','C++'],{street:'Ameerpet'})// here we can declare method or  in the constructor function we can declare
- console.log(std3) //StudentInfo { sno: 100, name: 'vishwa', free: 2000, freePaid: 1200 }
- console.log(std4)
- funResult = std3.getFreeStatus()// To access function 
+ console.log(std3) //O/P : StudentInfo { sno: 100, name: 'vishwa', free: 2000, freePaid: 1200, skill: [ 'java', 'python' ], address: { street: 'KPHB' }, getFreeStatus: [Function (anonymous)] }
+ console.log(std4) // O/P: StudentInfo { sno: 200, name: 'Ramesh', free: 3000, freePaid: 1300, skill: [ 'C', 'C++' ], address: { street: 'Ameerpet' }, getFreeStatus: [Function (anonymous)]}
+ funResult = std3.getFreeStatusProto() // we are accessing Prototype function
  console.log(funResult)
-// each object has it's own data
-//  |sno           |        |  sno            |    
-//  |name ..       |        |   name ...      |
-//  |getFreeStatus()|        | getFreeStatus() |
-//Here we are using different function for every object ex:- getFreeStatus
 
 
-//  |sno           |  <= getFreeStatus =>     |  sno            |    
-//  |name ..       |                     |   name ...      |
-//  |              |                     |                  |
+ //  Here we are using the proto type function 
+
+//  |  sno           |  <= getFreeStatusProto =>     |   sno            |    
+//  |  name ..       |                               |    name ...      |
+//  |               |                               |                  |
 // This is called Prototype constructor
+// we used same getFreeStatusProto for two or more objects
 
+
+// Alternative for the Prototype
+// By using class concept
 
 //Syntax
 // class ClassName{
@@ -145,7 +164,7 @@ StudentInfo.prototype.getFreeStatus = function () {
 
 
 // Es6 new constructor
-class Student {
+class Student1 {
     constructor(sno,name,free,freePaid,skill,address,getFreeStatus){
         //object intialization logic
         this.sno = sno
@@ -165,7 +184,8 @@ class Student {
       }
 }
 }
-let std1 = new Student(100,'vishwa',2000,1200,['java','python'],{street:'KPHB'}) // we use new keyword for creating constructor
-let std2 = new Student(200,'Ramesh',3000,1300,['C','C++'],{street:'Ameerpet'})
-console.log(std1)
-console.log(std2)
+let std1 = new Student1(100,'vishwa',2000,1200,['java','python'],{street:'KPHB'}) // we use new keyword for creating constructor
+let std2 = new Student1(200,'Ramesh',3000,1300,['C','C++'],{street:'Ameerpet'})
+console.log(std1) // Student1 { sno: 100, name: 'vishwa', free: 2000,  freePaid: 1200, skill: [ 'java', 'python' ],  address: { street: 'KPHB' }  }
+console.log(std2) //Student1 { sno: 200, name: 'Ramesh', free: 3000, freePaid: 1300, skill: [ 'C', 'C++' ],  address: { street: 'Ameerpet' } }
+console.log(std1.getFreeStatus()) // O/P :- pending
